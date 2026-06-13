@@ -33,7 +33,7 @@
             position: relative;
         }
 
-        /* BACKGROUND DECORATIONS (Shapes, Rich Stars & Hearts) */
+        /* BACKGROUND DECORATIONS */
         .bg-shapes {
             position: absolute;
             top: 0;
@@ -57,17 +57,6 @@
         .orb-2 { width: 450px; height: 450px; background: var(--dark-olive); bottom: -100px; right: -50px; animation-delay: -2s; }
         .orb-3 { width: 280px; height: 280px; background: var(--light-olive); top: 35%; left: 75%; animation-delay: -4s; }
         .orb-4 { width: 380px; height: 380px; background: #44101d; bottom: 25%; left: 8%; animation-delay: -6s; }
-
-        .decor-shape {
-            position: absolute;
-            opacity: 0.22;
-            fill: var(--light-olive);
-            animation: spinFloat 22s infinite linear;
-        }
-        
-        .heart-shape {
-            fill: var(--burgundy);
-        }
 
         /* SCREEN CONFIGURATIONS */
         .screen {
@@ -140,7 +129,7 @@
         .menu-container {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 20px;
             width: 100%;
             max-width: 500px; 
         }
@@ -149,8 +138,8 @@
             background: linear-gradient(135deg, var(--dark-olive), #2c2e15);
             color: var(--text-light);
             border: 2px solid var(--light-olive);
-            padding: 22px 40px; 
-            font-size: 1.3rem;
+            padding: 18px 40px; 
+            font-size: 1.2rem;
             font-family: 'Playfair Display', serif;
             letter-spacing: 1px;
             border-radius: 50px;
@@ -181,7 +170,112 @@
             color: var(--text-gold);
         }
 
-        /* CORNER BUTTONS STYLE */
+        /* CUSTOM GREEN PASSWORD MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(25, 14, 17, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-box {
+            background: linear-gradient(135deg, #2a2c14, var(--dark-olive));
+            border: 2px solid var(--light-olive);
+            border-radius: 20px;
+            padding: 35px 30px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 20px 55px rgba(0,0,0,0.7);
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-overlay.open .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-question {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-input {
+            width: 100%;
+            background: rgba(25, 14, 17, 0.5);
+            border: 1px solid var(--light-olive);
+            color: var(--text-light);
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            outline: none;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 25px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .modal-input:focus {
+            border-color: var(--text-gold);
+            box-shadow: 0 0 10px rgba(222, 201, 138, 0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .modal-btn-confirm {
+            background: var(--light-olive);
+            color: var(--bg-dark);
+            border: none;
+            width: 100%; /* كبرنا الزرار شوية لأن مفيش Cancel هنا */
+            max-width: 150px;
+        }
+
+        .modal-btn-confirm:hover {
+            background: var(--text-gold);
+            transform: translateY(-2px);
+        }
+
+        .modal-error {
+            color: #ff4d6d;
+            font-size: 0.95rem;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: 500;
+        }
+
+        /* BOTTOM ROW BUTTONS STYLE */
         .corner-btn {
             position: absolute;
             bottom: 40px;
@@ -192,31 +286,43 @@
             font-family: 'Playfair Display', serif;
             border-radius: 30px;
             cursor: pointer;
-            transition: all 0.4s ease;
             backdrop-filter: blur(10px);
             font-weight: 600;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             z-index: 10;
+            transition: background 0.4s, border 0.4s, color 0.4s;
         }
 
-        .corner-btn-left { left: 40px; border: 2px dashed var(--text-gold); }
-        .corner-btn-right { right: 40px; border: 2px dashed var(--light-olive); }
+        .corner-btn-left { left: 40px; border: 2px dashed var(--text-gold); transition: transform 0.4s, background 0.4s, color 0.4s; }
+        .corner-btn-right { right: 40px; border: 2px dashed var(--light-olive); transition: transform 0.4s, background 0.4s, color 0.4s; }
+        
+        /* Center Button Style */
+        .corner-btn-center { 
+            left: 50%; 
+            transform: translateX(-50%); 
+            border: 2px dashed var(--light-olive); 
+            transition: transform 0.4s, background 0.4s, color 0.4s;
+        }
 
         .corner-btn:hover {
             background: var(--burgundy);
             border-style: solid;
-            transform: translateY(-3px) scale(1.05);
             color: var(--text-gold);
         }
-        
-        .corner-btn-left:hover { border-color: var(--light-olive); box-shadow: 0 10px 25px rgba(159, 160, 106, 0.4); }
-        .corner-btn-right:hover { border-color: var(--text-gold); box-shadow: 0 10px 25px rgba(226, 201, 138, 0.4); }
+
+        .corner-btn-left:hover, .corner-btn-right:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .corner-btn-center:hover {
+            transform: translateX(-50%) translateY(-3px) scale(1.05);
+        }
 
         /* SUB-SCREENS */
         .sub-screen {
             background: radial-gradient(circle at center, #2a151a 0%, var(--bg-dark) 100%);
             padding: 60px 40px;
-            overflow-y: auto; /* تعديل ليسمح بالسكرول */
+            overflow-y: auto; 
         }
 
         .back-btn {
@@ -241,9 +347,9 @@
 
         /* SUB-SCREEN 1: TYPING PAGE */
         .typing-wrapper {
-            max-width: 900px; /* تعديل لزيادة العرض */
-            width: 95%; /* تعديل لزيادة العرض */
-            margin: 0 auto; /* توسيط */
+            max-width: 900px; 
+            width: 95%; 
+            margin: 0 auto; 
             background: rgba(25, 14, 17, 0.7);
             padding: 40px;
             border-radius: 20px;
@@ -293,7 +399,6 @@
         .promise-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--text-gold); margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .promise-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.8; color: var(--text-light); margin-bottom: 30px; }
         
-        /* تصميم الأزرار والمجموعات الجديدة */
         .button-group { display: flex; flex-direction: column; align-items: center; gap: 15px; }
         
         .accept-promise-btn { background: linear-gradient(135deg, var(--burgundy), #7c1c32); color: var(--text-light); border: 2px solid var(--text-gold); padding: 16px 40px; border-radius: 50px; font-size: 1.15rem; cursor: pointer; font-weight: 700; font-family: 'Montserrat', sans-serif; transition: all 0.4s ease; box-shadow: 0 8px 20px rgba(92,19,36,0.4); }
@@ -303,7 +408,6 @@
         .reject-promise-btn:hover { color: var(--text-gold); transform: scale(1.05); }
 
         .ring-hint { margin-top: 15px; font-size: 0.95rem; color: var(--light-olive); letter-spacing: 2px; text-transform: uppercase; animation: pulse 2s infinite; transition: opacity 0.3s ease; }
-        
         .ring-box.opened ~ .ring-hint { animation: none !important; display: none !important; opacity: 0 !important; pointer-events: none; }
 
         /* Dynamic Heart Explosion */
@@ -319,6 +423,69 @@
         .love-card { background: rgba(92, 19, 36, 0.15); padding: 60px 80px; border-radius: 30px; border: 2px solid var(--burgundy); box-shadow: 0 25px 60px rgba(0,0,0,0.6); backdrop-filter: blur(15px); position: relative; }
         .world-message { font-family: 'Playfair Display', serif; font-style: italic; font-size: 4.5rem; color: var(--text-gold); animation: deepPulse 1.8s infinite alternate ease-in-out; }
 
+        /* DYNAMIC REASONS WITH INTERACTIVE HEARTS */
+        .hearts-grid-row {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 650px;
+            margin: 30px auto;
+            background: rgba(25, 14, 17, 0.4);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px dashed rgba(159, 160, 106, 0.3);
+        }
+
+        .interactive-heart {
+            font-size: 2rem;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+        }
+
+        .interactive-heart:hover {
+            transform: scale(1.4) rotate(15deg);
+            filter: drop-shadow(0 0 10px var(--text-gold));
+        }
+
+        .interactive-heart.pop {
+            animation: heartPop 0.4s ease-out;
+        }
+
+        @keyframes heartPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.6); }
+            100% { transform: scale(1); }
+        }
+
+        /* GREEN THEMED MESSAGE DISPLAY CARD */
+        .reason-display-card {
+            display: none;
+            background: rgba(61, 64, 29, 0.35); 
+            border: 2px solid var(--light-olive); 
+            padding: 35px 30px;
+            border-radius: 25px;
+            font-size: 1.4rem;
+            line-height: 1.7;
+            font-family: 'Playfair Display', serif;
+            color: var(--text-light);
+            max-width: 650px;
+            margin: 25px auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .reason-display-card .card-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 15px;
+            animation: deepPulse 1s infinite alternate ease-in-out;
+        }
+
         /* LOVE COUNTER */
         .counter-label { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2.2rem; color: var(--text-gold); margin-bottom: 35px; }
         .counter-grid { display: flex; gap: 25px; justify-content: center; }
@@ -328,7 +495,6 @@
 
         /* ANIMATIONS */
         @keyframes floating { 0% { transform: translateY(0px) translateX(0px); } 100% { transform: translateY(30px) translateX(20px); } }
-        @keyframes spinFloat { 0% { transform: translateY(105vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.35; } 100% { transform: translateY(-15vh) rotate(360deg) scale(1.2); opacity: 0; } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0% { opacity: 0.3; transform: scale(0.97); } 50% { opacity: 1; transform: scale(1.03); } 100% { opacity: 0.3; transform: scale(0.97); } }
         @keyframes deepPulse { 0% { transform: scale(0.96); } 100% { transform: scale(1.04); } }
@@ -337,12 +503,19 @@
             .main-title { font-size: 2.2rem; } .main-title span { font-size: 3.2rem; }
             .header-title { font-size: 2.8rem; margin-bottom: 30px; }
             .menu-btn { padding: 18px 30px; font-size: 1.1rem; }
+            
+            /* Responsive layout for bottom buttons */
             .corner-btn { position: relative; bottom: auto; left: auto; right: auto; margin-top: 15px; width: 100%; text-align: center; }
+            .corner-btn-center { left: auto; transform: none; }
+            .corner-btn-left:hover, .corner-btn-right:hover, .corner-btn-center:hover { transform: translateY(-3px) scale(1.05); }
+
             .world-message { font-size: 2.6rem; } .love-card { padding: 35px 20px; width: 100%; }
             #typing-space { font-size: 1.2rem; } .back-btn { top: 20px; left: 20px; padding: 8px 18px; }
             .counter-label { font-size: 1.4rem; margin-bottom: 20px; } .counter-grid { gap: 10px; flex-wrap: wrap; }
             .counter-box { min-width: 78px; padding: 14px 8px; } .counter-number { font-size: 1.8rem; }
             .promise-title { font-size: 1.7rem; } .promise-text { font-size: 1.1rem; }
+            .interactive-heart { font-size: 1.6rem; }
+            .reason-display-card { font-size: 1.15rem; padding: 25px 20px; }
         }
     </style>
 </head>
@@ -352,11 +525,25 @@
         <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="orb orb-4"></div>
     </div>
 
-    <div id="screen1" class="screen active" onclick="navigateTo('screen2')">
+    <!-- CUSTOM GREEN PASSWORD MODAL -->
+    <div id="passwordModal" class="modal-overlay">
+        <div class="modal-box">
+            <p class="modal-question">who is the pretiest girl in the world</p>
+            <input type="text" id="passwordInput" class="modal-input" placeholder="Type answer here..." autocomplete="off">
+            <p id="modalError" class="modal-error">Wrong answer! 👀 elements of beauty don't recognize you.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-confirm" onclick="submitPassword()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 1: SPLASH LANDING -->
+    <div id="screen1" class="screen active" onclick="triggerPasswordModal()">
         <h1 class="main-title">made only for the <span>most beautiful girl in the world</span></h1>
         <p class="tap-continue">tap to continue</p>
     </div>
 
+    <!-- SCREEN 2: MAIN MENU -->
     <div id="screen2" class="screen">
         <h1 class="header-title">Welcome to our hour</h1>
         <div class="menu-container">
@@ -364,7 +551,10 @@
             <button class="menu-btn" onclick="openSubScreen('sub2')">Our years together</button>
             <button class="menu-btn" onclick="openSubScreen('sub3')">A Special Promise</button>
         </div>
+        
+        <!-- Bottom Row Buttons -->
         <button class="corner-btn corner-btn-left" onclick="openSubScreen('sub4')">Your Fav Moments</button>
+        <button class="corner-btn corner-btn-center" onclick="openSubScreen('sub6')">Reasons I Love You</button>
         <button class="corner-btn corner-btn-right" onclick="openSubScreen('sub5')">Our Time Together</button>
     </div>
 
@@ -431,7 +621,72 @@
         </div>
     </div>
 
+    <!-- REASONS SECTION -->
+    <div id="sub6" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+        <h1 class="header-title" style="font-size: 3.5rem; margin-bottom: 20px;">Reasons I Love You</h1>
+        
+        <!-- INITIAL BUTTON -->
+        <button class="menu-btn" id="askReasonBtn" onclick="revealHeartsContainer()">I want a reason</button>
+        
+        <!-- ROW OF 20 HEARTS -->
+        <div class="hearts-grid-row" id="heartsRow"></div>
+        
+        <!-- DISPLAY CARD -->
+        <div class="reason-display-card" id="reasonDisplayCard">
+            <span class="card-icon" id="cardIcon">✨</span>
+            <p id="reasonTextSpace"></p>
+        </div>
+    </div>
+
     <script>
+        // دالة تفعيل ظهور الباسورد عند الضغط على شاشة البداية
+        function triggerPasswordModal() {
+            const modal = document.getElementById('passwordModal');
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('modalError');
+            
+            input.value = '';
+            error.style.display = 'none';
+            modal.style.display = 'flex';
+            
+            setTimeout(() => {
+                modal.classList.add('open');
+                input.focus();
+            }, 10);
+
+            input.onkeydown = function(e) {
+                if (e.key === 'Enter') {
+                    submitPassword();
+                }
+            };
+        }
+
+        function closePasswordModal() {
+            const modal = document.getElementById('passwordModal');
+            modal.classList.remove('open');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 400);
+        }
+
+        function submitPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const error = document.getElementById('modalError');
+            
+            if (input && input.trim().toLowerCase() === "haniin") {
+                closePasswordModal();
+                // إذا كانت الإجابة صحيحة، ينتقل فوراً للواجهة الرئيسية (screen2)
+                navigateTo('screen2');
+            } else {
+                error.style.display = 'block';
+                const box = document.querySelector('.modal-box');
+                box.style.animation = 'none';
+                box.offsetHeight;
+                box.style.animation = 'pulse 0.3s ease 2';
+            }
+        }
+
         function navigateTo(screenId) {
             const currentActive = document.querySelector('.screen.active');
             const targetScreen = document.getElementById(screenId);
@@ -450,6 +705,11 @@
                 document.getElementById('promiseText').innerText = `"A promise to hold your hand through every chapter of our lives, to protect your beautiful smile, and to love you deeper with every passing breath. Will you accept this promise?"`;
                 document.getElementById('acceptBtn').style.display = 'inline-block';
                 document.getElementById('rejectBtn').style.display = 'inline-block';
+            }
+            if(screenId !== 'sub6') {
+                document.getElementById('askReasonBtn').style.display = 'inline-block';
+                document.getElementById('heartsRow').style.display = 'none';
+                document.getElementById('reasonDisplayCard').style.display = 'none';
             }
         }
 
@@ -520,6 +780,101 @@
             document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
         }
         calculateLoveTime(); setInterval(calculateLoveTime, 1000);
+
+        /* 50 Romantic Messages */
+        const fiftyReasons = [
+            "Your beautiful smile completely lights up my darkest days.",
+            "The way you always support me, trust me, and stand by my side.",
+            "Because you are my safest place, my comfort, and my entire world.",
+            "Your kind heart and pure soul make me want to be a better person.",
+            "I love how safe and completely at peace I feel when we talk.",
+            "Your laugh is my absolute favorite sound in the whole universe.",
+            "The way you look at me makes all my worries immediately melt away.",
+            "You always know exactly how to lift my spirits and make me smile.",
+            "Your endless patience and how deeply you understand my soul.",
+            "You bring out the absolute best, happiest version of me.",
+            "Every single text from you brings a huge smile to my face.",
+            "The way you care for the smallest details of my life.",
+            "You are my absolute favorite thought every single day.",
+            "I love how your hand fits perfectly inside mine.",
+            "Your voice is the absolute sweetest melody I could ever listen to.",
+            "You are my dream come true and the greatest blessing in my life.",
+            "Your presence brings unmatched comfort and warmth to my heart.",
+            "I love how passionate and beautiful you are about your dreams.",
+            "You make every single ordinary moment feel like absolute magic.",
+            "Your heart is purely made of gold, kindness, and love.",
+            "You are completely irreplaceable to me, now and forever.",
+            "I love how we can talk for hours and never get tired of each other.",
+            "Your unmatched intelligence, wisdom, and how beautifully you think.",
+            "You make my entire world a much brighter and more beautiful place.",
+            "I love how genuinely proud you are of me and everything I do.",
+            "Your warm, loving hugs that make me feel entirely protected.",
+            "You love me and accept me perfectly for exactly who I am.",
+            "I love knowing that we are step-by-step building our future together.",
+            "You are my favorite hello and my absolute hardest goodbye.",
+            "Your faith and trust in me give me the strength to conquer anything.",
+            "The adorable little habits that make you so uniquely you.",
+            "Simply because you are you, and I love everything about you.",
+            "Your kindness toward everyone inspires me every single day.",
+            "The way you stay in my mind from the moment I wake up until I sleep.",
+            "You are the most precious, priceless gift life has ever given me.",
+            "I love sharing all my secrets, dreams, and life plans with you.",
+            "The cozy, warm feeling of safety whenever you are close to me.",
+            "You are the anchor that keeps me beautifully grounded in life.",
+            "I love the gentle way you express your care and pure love.",
+            "Your unmatched loyalty and how safe my heart is with you.",
+            "You make life look like an incredible, beautiful adventure.",
+            "I love how you look at me when you think I am not paying attention.",
+            "You are my perfect matching piece in this massive world.",
+            "Your soft, beautiful eyes that tell me everything without a word.",
+            "The way you always find the beauty and light in everything around us.",
+            "You completely fill my life with joy, meaning, and true happiness.",
+            "I love making beautiful, unforgettable memories by your side.",
+            "Your sweet words that can fix the hardest, most tiring day.",
+            "Because loving you is the easiest, most natural thing I've ever done.",
+            "You are my heart, my soul, my today, and all of my tomorrows."
+        ];
+
+        const heartIcons = ['❤️', '💖', '💝', '💕', '💘', '💗'];
+
+        function revealHeartsContainer() {
+            document.getElementById('askReasonBtn').style.display = 'none';
+            const heartsRow = document.getElementById('heartsRow');
+            heartsRow.innerHTML = ''; 
+            heartsRow.style.display = 'flex';
+            document.getElementById('reasonDisplayCard').style.display = 'none';
+
+            for (let i = 1; i <= 20; i++) {
+                const heartSpan = document.createElement('span');
+                heartSpan.className = 'interactive-heart';
+                heartSpan.innerText = '❤️';
+                heartSpan.title = 'Click for a reason!';
+                heartSpan.onclick = function() { displayRandomReason(this); };
+                heartsRow.appendChild(heartSpan);
+            }
+        }
+
+        function displayRandomReason(clickedHeart) {
+            clickedHeart.classList.add('pop');
+            setTimeout(() => clickedHeart.classList.remove('pop'), 400);
+            clickedHeart.innerText = '💖';
+
+            const randomIndex = Math.floor(Math.random() * fiftyReasons.length);
+            const randomMsg = fiftyReasons[randomIndex];
+            const randomIcon = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+
+            const displayCard = document.getElementById('reasonDisplayCard');
+            const textSpace = document.getElementById('reasonTextSpace');
+            const iconSpace = document.getElementById('cardIcon');
+
+            iconSpace.innerText = randomIcon;
+            textSpace.innerText = randomMsg;
+            
+            displayCard.style.display = 'block';
+            displayCard.style.animation = 'none';
+            displayCard.offsetHeight; 
+            displayCard.style.animation = 'fadeInDown 0.6s ease';
+        }
     </script>
 </body>
 </html>
