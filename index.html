@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for my sweety</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,750;1,400&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Color Palette from Image */
+        :root {
+            --bg-dark: #190e11;       /* Deep plum/chocolate black */
+            --burgundy: #5c1324;      /* Luxurious deep burgundy */
+            --dark-olive: #3d401d;    /* Rich dark olive */
+            --light-olive: #9fa06a;   /* Elegant light sage/olive */
+            --text-light: #fdfbf7;    /* Premium soft white */
+            --text-gold: #e2c98a;     /* Soft gold accent */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* BACKGROUND DECORATIONS (Shapes, Rich Stars & Hearts) */
+        .bg-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.22;
+            animation: floating 14s infinite alternate ease-in-out;
+        }
+
+        .orb-1 { width: 350px; height: 350px; background: var(--burgundy); top: -50px; left: -50px; }
+        .orb-2 { width: 450px; height: 450px; background: var(--dark-olive); bottom: -100px; right: -50px; animation-delay: -2s; }
+        .orb-3 { width: 280px; height: 280px; background: var(--light-olive); top: 35%; left: 75%; animation-delay: -4s; }
+        .orb-4 { width: 380px; height: 380px; background: #44101d; bottom: 25%; left: 8%; animation-delay: -6s; }
+
+        .decor-shape {
+            position: absolute;
+            opacity: 0.22;
+            fill: var(--light-olive);
+            animation: spinFloat 22s infinite linear;
+        }
+        
+        .heart-shape {
+            fill: var(--burgundy);
+        }
+
+        /* SCREEN CONFIGURATIONS */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .screen.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* SCREEN 1: SPLASH LANDING */
+        #screen1 {
+            cursor: pointer;
+            background: radial-gradient(circle at center, rgba(92,19,36,0.2) 0%, var(--bg-dark) 70%);
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            line-height: 1.4;
+            max-width: 900px;
+            text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6);
+            animation: fadeInDown 1.5s ease;
+        }
+
+        .main-title span {
+            color: var(--light-olive);
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .tap-continue {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--text-gold);
+            font-weight: 500;
+            animation: pulse 2.5s infinite;
+        }
+
+        /* SCREEN 2: MAIN MENU */
+        .header-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--light-olive);
+            margin-bottom: 45px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+            max-width: 500px; 
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, var(--dark-olive), #2c2e15);
+            color: var(--text-light);
+            border: 2px solid var(--light-olive);
+            padding: 22px 40px; 
+            font-size: 1.3rem;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: all 0.6s;
+        }
+
+        .menu-btn:hover::before { left: 100%; }
+
+        .menu-btn:hover {
+            background: linear-gradient(135deg, var(--burgundy), #44101d);
+            border-color: var(--text-gold);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(92,19,36,0.4);
+            color: var(--text-gold);
+        }
+
+        /* CORNER BUTTONS STYLE */
+        .corner-btn {
+            position: absolute;
+            bottom: 40px;
+            background: rgba(92, 19, 36, 0.3);
+            color: var(--text-light);
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .corner-btn-left { left: 40px; border: 2px dashed var(--text-gold); }
+        .corner-btn-right { right: 40px; border: 2px dashed var(--light-olive); }
+
+        .corner-btn:hover {
+            background: var(--burgundy);
+            border-style: solid;
+            transform: translateY(-3px) scale(1.05);
+            color: var(--text-gold);
+        }
+        
+        .corner-btn-left:hover { border-color: var(--light-olive); box-shadow: 0 10px 25px rgba(159, 160, 106, 0.4); }
+        .corner-btn-right:hover { border-color: var(--text-gold); box-shadow: 0 10px 25px rgba(226, 201, 138, 0.4); }
+
+        /* SUB-SCREENS */
+        .sub-screen {
+            background: radial-gradient(circle at center, #2a151a 0%, var(--bg-dark) 100%);
+            padding: 60px 40px;
+            overflow-y: auto; /* تعديل ليسمح بالسكرول */
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            background: transparent;
+            border: 2px solid var(--light-olive);
+            color: var(--light-olive);
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover { background: var(--light-olive); color: var(--bg-dark); transform: translateX(-3px); }
+
+        /* SUB-SCREEN 1: TYPING PAGE */
+        .typing-wrapper {
+            max-width: 900px; /* تعديل لزيادة العرض */
+            width: 95%; /* تعديل لزيادة العرض */
+            margin: 0 auto; /* توسيط */
+            background: rgba(25, 14, 17, 0.7);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(159, 160, 106, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        #typing-space { font-size: 1.6rem; line-height: 2; font-family: 'Playfair Display', serif; text-align: center; }
+
+        /* SUB-SCREEN 2: TIMELINE */
+        .timeline-container { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
+        .timeline-item { background: rgba(61, 64, 29, 0.2); border: 1px solid rgba(159, 160, 106, 0.3); border-radius: 15px; overflow: hidden; transition: all 0.4s ease; backdrop-filter: blur(5px); }
+        .timeline-year { padding: 22px 30px; font-size: 1.6rem; font-family: 'Playfair Display', serif; font-weight: 700; color: var(--text-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .timeline-year:hover { background: rgba(159, 160, 106, 0.1); }
+        .timeline-year span { font-size: 1.2rem; transition: transform 0.4s; color: var(--light-olive); }
+        .timeline-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0, 1, 0, 1); padding: 0 30px; line-height: 1.8; font-size: 1.15rem; text-align: left; }
+        .timeline-item.active { background: rgba(92, 19, 36, 0.3); border-color: var(--burgundy); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .timeline-item.active .timeline-content { padding-bottom: 25px; max-height: 200px; }
+        .timeline-item.active .timeline-year span { transform: rotate(45deg); color: var(--text-gold); }
+
+        /* SUB-SCREEN 3: THE VIRTUAL PROMISE RING */
+        .ring-box-container { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 30px; width: 100%; }
+        .ring-box { position: relative; width: 150px; height: 150px; cursor: pointer; margin-bottom: 30px; perspective: 1000px; }
+        .ring-box-base { position: absolute; bottom: 0; width: 100%; height: 75px; background: linear-gradient(135deg, #44101d, #1c050a); border: 2px solid var(--text-gold); border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); z-index: 2; }
+        .ring-box-lid { position: absolute; top: 0; width: 100%; height: 75px; background: linear-gradient(135deg, var(--burgundy), #44101d); border: 2px solid var(--text-gold); border-radius: 12px 12px 3px 3px; z-index: 4; transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transform-origin: top; }
+        .the-ring { position: absolute; top: -35px; left: 50%; transform: translateX(-50%) scale(0); width: 90px; height: 90px; z-index: 3; transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); transition-delay: 0.3s; pointer-events: none; }
+        .ring-svg { width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(226, 201, 138, 0.6)); }
+
+        .ring-box.opened .ring-box-lid { transform: translateY(-90px) scale(0.8); opacity: 0; }
+        .ring-box.opened .the-ring { transform: translateX(-50%) scale(1.1) translateY(-25px); animation: ringFloat 3s infinite alternate ease-in-out; animation-delay: 1s; }
+
+        @keyframes ringFloat {
+            0% { transform: translateX(-50%) scale(1.1) translateY(-25px); filter: drop-shadow(0 0 10px rgba(226, 201, 138, 0.6)); }
+            100% { transform: translateX(-50%) scale(1.1) translateY(-35px); filter: drop-shadow(0 0 20px rgba(226, 201, 138, 0.9)); }
+        }
+
+        .sparkle { position: absolute; color: #fff; font-size: 1.4rem; text-shadow: 0 0 10px var(--text-gold); opacity: 0; }
+        .ring-box.opened .s1 { animation: sparkleAnim 2.5s infinite ease-in-out; top: -10px; left: 10px; }
+        .ring-box.opened .s2 { animation: sparkleAnim 2.5s infinite ease-in-out; top: 0px; right: 10px; animation-delay: 1.2s; }
+
+        @keyframes sparkleAnim { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1.2); } }
+
+        .ring-info { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; transition-delay: 0.5s; max-width: 550px; pointer-events: none; }
+        .ring-box.opened ~ .ring-info { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        
+        .promise-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--text-gold); margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .promise-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.8; color: var(--text-light); margin-bottom: 30px; }
+        
+        /* تصميم الأزرار والمجموعات الجديدة */
+        .button-group { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        
+        .accept-promise-btn { background: linear-gradient(135deg, var(--burgundy), #7c1c32); color: var(--text-light); border: 2px solid var(--text-gold); padding: 16px 40px; border-radius: 50px; font-size: 1.15rem; cursor: pointer; font-weight: 700; font-family: 'Montserrat', sans-serif; transition: all 0.4s ease; box-shadow: 0 8px 20px rgba(92,19,36,0.4); }
+        .accept-promise-btn:hover { background: var(--text-gold); color: var(--bg-dark); border-color: var(--text-light); transform: translateY(-3px); box-shadow: 0 12px 25px rgba(226, 201, 138, 0.5); }
+        
+        .reject-promise-btn { background: transparent; color: rgba(253, 251, 247, 0.5); border: none; font-size: 1rem; cursor: pointer; font-family: 'Montserrat', sans-serif; text-decoration: underline; transition: all 0.3s ease; }
+        .reject-promise-btn:hover { color: var(--text-gold); transform: scale(1.05); }
+
+        .ring-hint { margin-top: 15px; font-size: 0.95rem; color: var(--light-olive); letter-spacing: 2px; text-transform: uppercase; animation: pulse 2s infinite; transition: opacity 0.3s ease; }
+        
+        .ring-box.opened ~ .ring-hint { animation: none !important; display: none !important; opacity: 0 !important; pointer-events: none; }
+
+        /* Dynamic Heart Explosion */
+        .floating-heart { position: absolute; pointer-events: none; z-index: 999; animation: flyUp 3.5s linear forwards; opacity: 0; }
+        @keyframes flyUp {
+            0% { transform: translateY(10vh) scale(0.5); opacity: 0; }
+            15% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) translateX(var(--x-move)) rotate(var(--rot)); opacity: 0; scale(1.3); }
+        }
+
+        /* PREMIUM LOVE CARDS */
+        .love-card { background: rgba(92, 19, 36, 0.15); padding: 60px 80px; border-radius: 30px; border: 2px solid var(--burgundy); box-shadow: 0 25px 60px rgba(0,0,0,0.6); backdrop-filter: blur(15px); position: relative; }
+        .world-message { font-family: 'Playfair Display', serif; font-style: italic; font-size: 4.5rem; color: var(--text-gold); animation: deepPulse 1.8s infinite alternate ease-in-out; }
+
+        /* LOVE COUNTER */
+        .counter-label { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2.2rem; color: var(--text-gold); margin-bottom: 35px; }
+        .counter-grid { display: flex; gap: 25px; justify-content: center; }
+        .counter-box { text-align: center; min-width: 135px; background: rgba(25, 14, 17, 0.6); padding: 22px 15px; border-radius: 18px; border: 1px solid rgba(159, 160, 106, 0.25); }
+        .counter-number { font-size: 3.2rem; font-weight: 700; color: var(--text-light); display: block; line-height: 1.1; }
+        .counter-unit { font-size: 0.95rem; text-transform: uppercase; color: var(--light-olive); letter-spacing: 2px; margin-top: 10px; font-weight: 600; display: block; }
+
+        /* ANIMATIONS */
+        @keyframes floating { 0% { transform: translateY(0px) translateX(0px); } 100% { transform: translateY(30px) translateX(20px); } }
+        @keyframes spinFloat { 0% { transform: translateY(105vh) rotate(0deg) scale(0.8); opacity: 0; } 10% { opacity: 0.35; } 100% { transform: translateY(-15vh) rotate(360deg) scale(1.2); opacity: 0; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { opacity: 0.3; transform: scale(0.97); } 50% { opacity: 1; transform: scale(1.03); } 100% { opacity: 0.3; transform: scale(0.97); } }
+        @keyframes deepPulse { 0% { transform: scale(0.96); } 100% { transform: scale(1.04); } }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.2rem; } .main-title span { font-size: 3.2rem; }
+            .header-title { font-size: 2.8rem; margin-bottom: 30px; }
+            .menu-btn { padding: 18px 30px; font-size: 1.1rem; }
+            .corner-btn { position: relative; bottom: auto; left: auto; right: auto; margin-top: 15px; width: 100%; text-align: center; }
+            .world-message { font-size: 2.6rem; } .love-card { padding: 35px 20px; width: 100%; }
+            #typing-space { font-size: 1.2rem; } .back-btn { top: 20px; left: 20px; padding: 8px 18px; }
+            .counter-label { font-size: 1.4rem; margin-bottom: 20px; } .counter-grid { gap: 10px; flex-wrap: wrap; }
+            .counter-box { min-width: 78px; padding: 14px 8px; } .counter-number { font-size: 1.8rem; }
+            .promise-title { font-size: 1.7rem; } .promise-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="orb orb-4"></div>
+    </div>
+
+    <div id="screen1" class="screen active" onclick="navigateTo('screen2')">
+        <h1 class="main-title">made only for the <span>most beautiful girl in the world</span></h1>
+        <p class="tap-continue">tap to continue</p>
+    </div>
+
+    <div id="screen2" class="screen">
+        <h1 class="header-title">Welcome to our hour</h1>
+        <div class="menu-container">
+            <button class="menu-btn" onclick="openSubScreen('sub1')">A message for my sweety</button>
+            <button class="menu-btn" onclick="openSubScreen('sub2')">Our years together</button>
+            <button class="menu-btn" onclick="openSubScreen('sub3')">A Special Promise</button>
+        </div>
+        <button class="corner-btn corner-btn-left" onclick="openSubScreen('sub4')">Your Fav Moments</button>
+        <button class="corner-btn corner-btn-right" onclick="openSubScreen('sub5')">Our Time Together</button>
+    </div>
+
+    <div id="sub1" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+        <div class="typing-wrapper"><div id="typing-space"></div></div>
+    </div>
+
+    <div id="sub2" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+        <div class="timeline-container">
+            <div class="timeline-item"><div class="timeline-year" onclick="toggleTimeline(this)">2021 <span>+</span></div><div class="timeline-content">The first year we talked, we didn't really know each other yet.</div></div>
+            <div class="timeline-item"><div class="timeline-year" onclick="toggleTimeline(this)">2022 <span>+</span></div><div class="timeline-content">The second year, we became closer friends.</div></div>
+            <div class="timeline-item"><div class="timeline-year" onclick="toggleTimeline(this)">2023 <span>+</span></div><div class="timeline-content">We got so close and became the nearest two people in each other's lives, and you loved me.</div></div>
+            <div class="timeline-item"><div class="timeline-year" onclick="toggleTimeline(this)">2025 <span>+</span></div><div class="timeline-content">We became practically married, just waiting for our house to be built so we can finally live together.</div></div>
+            <div class="timeline-item"><div class="timeline-year" onclick="toggleTimeline(this)">2026 <span>+</span></div><div class="timeline-content">I love you.</div></div>
+        </div>
+    </div>
+
+    <div id="sub3" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+        <div class="ring-box-container">
+            <div class="ring-box" id="romanticRingBox" onclick="openRingBox()">
+                <div class="ring-box-lid"></div>
+                <div class="ring-box-base"></div>
+                <div class="the-ring">
+                    <svg viewBox="0 0 100 100" class="ring-svg">
+                        <circle cx="50" cy="58" r="23" stroke="#e2c98a" stroke-width="5" fill="none" />
+                        <polygon points="44,35 56,35 50,42" fill="#e2c98a" />
+                        <polygon points="50,16 64,28 50,37 36,28" fill="#ffffff" />
+                        <polygon points="50,16 43,28 50,37" fill="#f0faff" />
+                        <polygon points="50,16 57,28 50,37" fill="#d2f0ff" />
+                    </svg>
+                    <div class="sparkle s1">✦</div><div class="sparkle s2">✦</div>
+                </div>
+            </div>
+            <p class="ring-hint" id="ringHint">Tap the box to unlock my promise</p>
+            <div class="ring-info">
+                <h2 class="promise-title">The Promise Ring</h2>
+                <p class="promise-text" id="promiseText">"A promise to hold your hand through every chapter of our lives, to protect your beautiful smile, and to love you deeper with every passing breath. Will you accept this promise?"</p>
+                <div class="button-group">
+                    <button class="accept-promise-btn" id="acceptBtn" onclick="triggerHeartExplosion()">Accept the Promise 🤍</button>
+                    <button class="reject-promise-btn" id="rejectBtn" onclick="triggerRejectMessage()">I don't accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sub4" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+        <div class="love-card"><h1 class="world-message">You are my world</h1></div>
+    </div>
+
+    <div id="sub5" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+        <div class="love-card" style="border-color: var(--light-olive); max-width: 720px; width: 100%;">
+            <div class="counter-label">Our Time Together</div>
+            <div class="counter-grid">
+                <div class="counter-box"><span id="days" class="counter-number">00</span><span class="counter-unit">Days</span></div>
+                <div class="counter-box"><span id="hours" class="counter-number">00</span><span class="counter-unit">Hours</span></div>
+                <div class="counter-box"><span id="minutes" class="counter-number">00</span><span class="counter-unit">Mins</span></div>
+                <div class="counter-box"><span id="seconds" class="counter-number">00</span><span class="counter-unit">Secs</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function navigateTo(screenId) {
+            const currentActive = document.querySelector('.screen.active');
+            const targetScreen = document.getElementById(screenId);
+            if (currentActive) {
+                currentActive.style.opacity = '0';
+                setTimeout(() => {
+                    currentActive.classList.remove('active');
+                    currentActive.style.display = 'none';
+                    showTarget(targetScreen);
+                }, 400); 
+            } else { showTarget(targetScreen); }
+
+            if(screenId !== 'sub1') { clearInterval(typingInterval); document.getElementById('typing-space').innerHTML = ""; }
+            if(screenId !== 'sub3') {
+                document.getElementById('romanticRingBox').classList.remove('opened');
+                document.getElementById('promiseText').innerText = `"A promise to hold your hand through every chapter of our lives, to protect your beautiful smile, and to love you deeper with every passing breath. Will you accept this promise?"`;
+                document.getElementById('acceptBtn').style.display = 'inline-block';
+                document.getElementById('rejectBtn').style.display = 'inline-block';
+            }
+        }
+
+        function showTarget(target) { target.style.display = 'flex'; target.offsetHeight; target.classList.add('active'); target.style.opacity = '1'; }
+        
+        let typingInterval;
+        function openSubScreen(subId) { navigateTo(subId); if(subId === 'sub1') { setTimeout(startTypingEffect, 600); } }
+
+        function startTypingEffect() {
+            const textToType = "I want you to know that you are the most beautiful girl in the world and the most beautiful person I've ever known. Everything you see is made for you, and it's just a small thing compared to what you deserve and what you do for me. You're the person who has stood by me the most, the one who has trusted me the most, and the one who can ease any hardship or problem I face. You're truly an angel descended from heaven. You're an irreplaceable treasure. May God keep you for me always, and may we always be together. May we get engaged soon, get married, and live the rest of our lives together. I'll do everything you want, and we'll buy flowers and plant them together. We'll have a garden for our house where we can sit together, joking and laughing, both of us happy just being by each other's side. Don't be afraid of anything that might happen in the future. Whatever happens, we'll solve it together, by being together. Today marks our fifth anniversary. Friends, the two closest people to each other, and the two people who love each other the most.May we grow together many times over, and may our love for each other increase every day. I want you to know that you are the most beautiful girl in the whole world, and that you are the most precious and beautiful thing that has ever happened to me. No matter how much I try to describe you, I will never be able to capture even a quarter of the beauty, tenderness, and kindness that you اhave...";
+            const container = document.getElementById('typing-space'); container.innerHTML = ""; let index = 0;
+            typingInterval = setInterval(() => {
+                if (index < textToType.length) { container.innerHTML += textToType.charAt(index); index++; } else { clearInterval(typingInterval); }
+            }, 40); 
+        }
+
+        function toggleTimeline(element) {
+            const item = element.parentElement;
+            document.querySelectorAll('.timeline-item').forEach(i => { if (i !== item) i.classList.remove('active'); });
+            item.classList.toggle('active');
+        }
+
+        function openRingBox() { document.getElementById('romanticRingBox').classList.add('opened'); }
+
+        function triggerHeartExplosion() {
+            const container = document.getElementById('sub3');
+            const heartsSymbols = ['❤', '💖', '🤍', '✨', '🌸'];
+            const colors = ['#5c1324', '#e2c98a', '#9fa06a', '#fdfbf7', '#ffb2c1'];
+            document.getElementById('promiseText').innerHTML = "<strong>Our promise is sealed in our hearts forever. your smile is completly mine and i will protect it forever ♾️</strong>";
+            document.getElementById('acceptBtn').style.display = 'none';
+            document.getElementById('rejectBtn').style.display = 'none';
+
+            for (let i = 0; i < 35; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerText = heartsSymbols[Math.floor(Math.random() * heartsSymbols.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                const xMove = (Math.random() * 200 - 100) + 'px';
+                const rot = (Math.random() * 360) + 'deg';
+                heart.style.setProperty('--x-move', xMove);
+                heart.style.setProperty('--rot', rot);
+                heart.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+                heart.style.animationDelay = (Math.random() * 0.4) + 's';
+                
+                container.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 4000);
+            }
+        }
+
+        function triggerRejectMessage() {
+            document.getElementById('promiseText').innerHTML = "<span style='font-family: \"Playfair Display\", serif; font-size: 2.2rem; color: var(--text-gold); display: block; direction: rtl;'>د انتي قرص جله ب صحيح️</span>";
+            document.getElementById('acceptBtn').style.display = 'none';
+            document.getElementById('rejectBtn').style.display = 'none';
+        }
+
+        function calculateLoveTime() {
+            const targetDate = new Date(2021, 7, 19, 0, 0, 0); const now = new Date(); const diff = now - targetDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+        calculateLoveTime(); setInterval(calculateLoveTime, 1000);
+    </script>
+</body>
+</html>
