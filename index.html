@@ -556,25 +556,21 @@
 
     <!-- FAVORITE SONG SECTION (UPDATED: NO IMAGE, ONLY BUTTONS AND TEXT) -->
     <div id="sub7" class="screen sub-screen">
-        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
-        <div class="love-card" style="max-width: 650px; width: 100%; padding: 40px 20px;">
-            <h1 class="header-title" style="font-size: 3rem; margin-bottom: 10px; color: var(--text-gold);">Play my fav song</h1>
-            
-            <div class="audio-player-container">
-                <!-- اسم الأغنية كنوع من الزينة بدل الصورة -->
-                <p class="song-title-text">🎵 Amr Diab - Khaleek Maaya 🎵</p>
-                
-                <!-- ملف الأغنية هنا -->
-                <audio id="favSong" src="khaleek_maaya.mp3" loop></audio>
-                
-                <div class="audio-controls">
-                    <button class="audio-btn" onclick="playSong()">Play / Resume</button>
-                    <button class="audio-btn" onclick="pauseSong()">Pause</button>
-                </div>
-            </div>
+    <button class="back-btn" onclick="navigateTo('screen2')">Back</button>
+    <div class="content-card">
+        <h1 class="header-title">Our Song</h1>
+        
+        <audio id="favSong" src="khaleek_maaya.mp3" loop></audio>
+        
+        <div class="cassette-body">
+            <div class="spool"></div>
+            <div class="spool"></div>
+        </div>
+        <div>
+            <button class="audio-btn" onclick="document.getElementById('favSong').play()">Play</button>
+            <button class="audio-btn" onclick="document.getElementById('favSong').pause()">Pause</button>
         </div>
     </div>
-
     <script>
         function triggerPasswordModal() {
             const modal = document.getElementById('passwordModal');
