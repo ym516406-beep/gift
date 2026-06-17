@@ -518,6 +518,64 @@
             .reason-display-card { font-size: 1.15rem; padding: 25px 20px; }
         }
 
+        /* ============ OUR PICTURES BUTTON ============ */
+        .pictures-corner-btn {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+            z-index: 50;
+            background: rgba(61, 64, 29, 0.35);
+            border: 2px solid var(--light-olive);
+            color: var(--text-light);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            transition: all 0.35s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .pictures-corner-btn:hover {
+            background: var(--dark-olive);
+            border-color: var(--text-gold);
+            color: var(--text-gold);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 22px rgba(61,64,29,0.45);
+        }
+
+        /* Upload plus button */
+        .pics-upload-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dark-olive), #2c2e15);
+            border: 2.5px solid var(--light-olive);
+            color: var(--text-light);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+            flex-shrink: 0;
+        }
+        .pics-upload-btn:hover {
+            background: linear-gradient(135deg, var(--burgundy), #44101d);
+            border-color: var(--text-gold);
+            color: var(--text-gold);
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 10px 28px rgba(92,19,36,0.45);
+        }
+
+        @media (max-width: 768px) {
+            .pictures-corner-btn { top: 18px; right: 18px; padding: 8px 15px; font-size: 0.85rem; }
+        }
+
         /* ============ CASSETTE TAPE STYLES ============ */
         .cassette-scene {
             display: flex;
@@ -871,6 +929,9 @@
     </div>
 
     <div id="screen2" class="screen">
+        <button class="pictures-corner-btn" onclick="openSubScreen('subPictures')" title="Our Pictures">
+             Our Pics
+        </button>
         <h1 class="header-title">Welcome to our home</h1>
         <div class="menu-container">
             <button class="menu-btn" onclick="openSubScreen('sub1')">A message for my sweety</button>
@@ -1150,7 +1211,11 @@
         function showTarget(target) { target.style.display = 'flex'; target.offsetHeight; target.classList.add('active'); target.style.opacity = '1'; }
         
         let typingInterval;
-        function openSubScreen(subId) { navigateTo(subId); if(subId === 'sub1') { setTimeout(startTypingEffect, 600); } }
+        function openSubScreen(subId) {
+            navigateTo(subId);
+            if(subId === 'sub1') { setTimeout(startTypingEffect, 600); }
+            if(subId === 'subPictures') { setTimeout(loadPictures, 400); }
+        }
 
         function startTypingEffect() {
             const textToType = "I want you to know that you are the most beautiful girl in the world and the most beautiful person I've ever known. Everything you see is made for you, and it's just a small thing compared to what you deserve and what you do for me. You're the person who has stood by me the most, the one who has trusted me the most, and the one who can ease any hardship or problem I face. You're truly an angel descended from heaven. You're an irreplaceable treasure. May God keep you for me always, and may we always be together. May we get engaged soon, get married, and live the rest of our lives together. I'll do everything you want, and we'll buy flowers and plant them together. We'll have a garden for our house where we can sit together, joking and laughing, both of us happy just being by each other's side. Don't be afraid of anything that might happen in the future. Whatever happens, we'll solve it together, by being together. Today marks our fifth anniversary. Friends, the two closest people to each other, and the two people who love each other the most.May we grow together many times over, and may our love for each other increase every day. I want you to know that you are the most beautiful girl in the whole world, and that you are the most precious and beautiful thing that has ever happened to me. No matter how much I try to describe you, I will never be able to capture even a quarter of the beauty, tenderness, and kindness that you اhave...";
@@ -1412,5 +1477,307 @@
             origNavigateTo(screenId);
         };
     </script>
+    <!-- SUB SCREEN: OUR PICTURES -->
+    <div id="subPictures" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+
+        <h1 class="header-title" style="font-size:2.8rem; margin-bottom: 10px; margin-top: 30px;">Our Pictures</h1>
+        <p style="font-family:'Playfair Display',serif; font-style:italic; color:var(--light-olive); margin-bottom:25px; font-size:1rem; letter-spacing:1px;">memories we keep together</p>
+
+        <!-- Upload button (plus icon) -->
+        <button class="pics-upload-btn" onclick="document.getElementById('picFileInput').click()" title="Add a picture">
+            <span style="font-size:1.5rem; line-height:1;">＋</span>
+        </button>
+        <input type="file" id="picFileInput" accept="image/*" style="display:none;" onchange="handlePicUpload(event)">
+
+        <!-- Upload status message -->
+        <div id="picUploadStatus" style="
+            display:none;
+            font-family:'Montserrat',sans-serif;
+            font-size:0.9rem;
+            color:var(--text-gold);
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            background: rgba(92,19,36,0.3);
+            border-radius: 20px;
+            border: 1px solid var(--burgundy);
+        "></div>
+
+        <!-- Gallery grid -->
+        <div id="picturesGallery" style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            width: 100%;
+            max-width: 900px;
+            padding: 10px 5px 60px;
+            overflow-y: auto;
+            max-height: calc(100vh - 280px);
+        ">
+            <!-- Pictures injected here -->
+        </div>
+
+        <!-- Empty state -->
+        <div id="picsEmptyState" style="
+            display:none;
+            text-align:center;
+            padding: 40px 20px;
+            font-family:'Playfair Display',serif;
+            font-style:italic;
+            color: rgba(159,160,106,0.5);
+            font-size: 1.2rem;
+        ">No pictures yet... be the first to add one 🌸</div>
+
+        <!-- Lightbox overlay -->
+        <div id="picsLightbox" onclick="closeLightbox()" style="
+            display:none;
+            position:fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(25,14,17,0.95);
+            z-index: 5000;
+            justify-content:center;
+            align-items:center;
+            flex-direction: column;
+            gap: 20px;
+        ">
+            <img id="picsLightboxImg" src="" style="max-width:90vw; max-height:80vh; border-radius:12px; border:2px solid var(--light-olive); box-shadow: 0 20px 50px rgba(0,0,0,0.8);">
+            <button id="picsLightboxDeleteBtn" onclick="event.stopPropagation(); deletePicture()" style="
+                background: rgba(92,19,36,0.8);
+                border: 2px solid #ff4d6d;
+                color: #ff4d6d;
+                padding: 10px 28px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+                transition: all 0.3s;
+            " onmouseover="this.style.background='rgba(255,77,109,0.2)'" onmouseout="this.style.background='rgba(92,19,36,0.8)'">
+                🗑 Delete this picture
+            </button>
+            <p style="font-family:'Montserrat',sans-serif; font-size:0.8rem; color:rgba(253,251,247,0.35); letter-spacing:1px;">tap anywhere to close</p>
+        </div>
+    </div>
+
+    <script>
+    /* ============================================================
+       OUR PICTURES — JSONBin.io shared gallery (no server needed)
+       ============================================================
+       HOW IT WORKS:
+       - Images are converted to base64 and stored directly in JSONBin
+       - JSONBin is a free cloud JSON storage service
+       - All visitors read & write the same bin → truly shared gallery
+       - Up to 500 pictures supported
+       - No editing of the site needed after setup
+
+       SETUP (one time only):
+       1. Go to https://jsonbin.io → sign up free
+       2. Create a new bin with this JSON:  { "photos": [] }
+       3. Copy the Bin ID from the URL
+       4. Get your API key from Account Settings
+       5. Replace BIN_ID and API_KEY below
+    ============================================================ */
+
+    const JSONBIN_BIN_ID  = '6a331e26f5f4af5e2904f59e';
+    const JSONBIN_API_KEY = '$2a$10$N2o1oTFDjyxsOnzR1nlw8e3ChKpTFCnpLmcXVhUmmmDei0AWkrtje';
+    const MAX_PHOTOS      = 500;
+
+    const JSONBIN_BASE    = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID;
+
+    let allPhotos         = [];   // { id, url, uploadedAt }
+    let lightboxPhotoId   = null;
+    let picsLoaded        = false;
+
+    /* Load photos when screen opens */
+    function loadPictures() {
+        if (picsLoaded) { renderGallery(); return; }
+        showPicStatus('Loading pictures... 🌸', false);
+
+        fetch(JSONBIN_BASE + '/latest', {
+            headers: { 'X-Master-Key': JSONBIN_API_KEY }
+        })
+        .then(r => r.json())
+        .then(data => {
+            allPhotos  = (data.record && data.record.photos) ? data.record.photos : [];
+            picsLoaded = true;
+            hidePicStatus();
+            renderGallery();
+        })
+        .catch(() => {
+            hidePicStatus();
+            showPicStatus('⚠️ Could not load pictures. Check your JSONBin setup.', false);
+            renderGallery();
+        });
+    }
+
+    function renderGallery() {
+        const gallery    = document.getElementById('picturesGallery');
+        const emptyState = document.getElementById('picsEmptyState');
+        gallery.innerHTML = '';
+
+        if (!allPhotos || allPhotos.length === 0) {
+            emptyState.style.display = 'block';
+            return;
+        }
+        emptyState.style.display = 'none';
+
+        allPhotos.forEach(photo => {
+            const wrapper = document.createElement('div');
+            wrapper.style.cssText = `
+                position:relative; border-radius:12px; overflow:hidden;
+                border:2px solid rgba(159,160,106,0.25);
+                background:rgba(25,14,17,0.5);
+                aspect-ratio:1/1;
+                cursor:pointer;
+                transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            `;
+            wrapper.onmouseover = () => {
+                wrapper.style.transform = 'scale(1.04)';
+                wrapper.style.borderColor = 'var(--light-olive)';
+                wrapper.style.boxShadow   = '0 8px 25px rgba(0,0,0,0.5)';
+            };
+            wrapper.onmouseout = () => {
+                wrapper.style.transform   = 'scale(1)';
+                wrapper.style.borderColor = 'rgba(159,160,106,0.25)';
+                wrapper.style.boxShadow   = 'none';
+            };
+            wrapper.onclick = () => openLightbox(photo.id, photo.url);
+
+            const img = document.createElement('img');
+            img.src   = photo.url;
+            img.style.cssText = 'width:100%; height:100%; object-fit:cover; display:block;';
+            img.loading = 'lazy';
+
+            wrapper.appendChild(img);
+            gallery.appendChild(wrapper);
+        });
+    }
+
+    function handlePicUpload(event) {
+        const file = event.target.files[0];
+        event.target.value = '';          // reset so same file can be re-selected
+        if (!file) return;
+
+        if (!allPhotos) allPhotos = [];
+        if (allPhotos.length >= MAX_PHOTOS) {
+            showPicStatus('Gallery is full (500 pictures max) 🌸', false);
+            return;
+        }
+
+        showPicStatus('Uploading picture... ⏳', false);
+
+        // Resize + convert to base64
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            resizeImage(e.target.result, 800, function(dataUrl) {
+                const newPhoto = {
+                    id: Date.now() + '_' + Math.random().toString(36).substr(2,5),
+                    url: dataUrl,
+                    uploadedAt: new Date().toISOString()
+                };
+
+                const updatedPhotos = [...allPhotos, newPhoto];
+
+                fetch(JSONBIN_BASE, {
+                    method:  'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': JSONBIN_API_KEY
+                    },
+                    body: JSON.stringify({ photos: updatedPhotos })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.record) {
+                        allPhotos = data.record.photos;
+                        showPicStatus('Picture added! 🌸', true);
+                        renderGallery();
+                        setTimeout(hidePicStatus, 2500);
+                    } else {
+                        showPicStatus('Upload failed. Try again.', false);
+                    }
+                })
+                .catch(() => showPicStatus('Upload failed. Check your connection.', false));
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+
+    /* Resize helper — keeps images small enough for JSONBin's 100KB limit */
+    function resizeImage(dataUrl, maxDim, callback) {
+        const img = new Image();
+        img.onload = function() {
+            let w = img.width, h = img.height;
+            if (w > maxDim || h > maxDim) {
+                if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+                else       { w = Math.round(w * maxDim / h); h = maxDim; }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            callback(canvas.toDataURL('image/jpeg', 0.82));
+        };
+        img.src = dataUrl;
+    }
+
+    function openLightbox(photoId, url) {
+        lightboxPhotoId = photoId;
+        document.getElementById('picsLightboxImg').src = url;
+        const lb = document.getElementById('picsLightbox');
+        lb.style.display = 'flex';
+        setTimeout(() => lb.style.opacity = '1', 10);
+    }
+
+    function closeLightbox() {
+        const lb = document.getElementById('picsLightbox');
+        lb.style.display = 'none';
+        lightboxPhotoId  = null;
+    }
+
+    function deletePicture() {
+        if (!lightboxPhotoId) return;
+        if (!confirm('Delete this picture for everyone? 🗑')) return;
+
+        showPicStatus('Deleting... ⏳', false);
+        closeLightbox();
+
+        const updatedPhotos = allPhotos.filter(p => p.id !== lightboxPhotoId);
+
+        fetch(JSONBIN_BASE, {
+            method:  'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_API_KEY
+            },
+            body: JSON.stringify({ photos: updatedPhotos })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.record) {
+                allPhotos = data.record.photos;
+                showPicStatus('Picture deleted 🌿', true);
+                renderGallery();
+                setTimeout(hidePicStatus, 2000);
+            } else {
+                showPicStatus('Delete failed. Try again.', false);
+            }
+        })
+        .catch(() => showPicStatus('Delete failed. Check your connection.', false));
+    }
+
+    function showPicStatus(msg, success) {
+        const el = document.getElementById('picUploadStatus');
+        el.textContent = msg;
+        el.style.display = 'block';
+        el.style.borderColor  = success ? 'var(--light-olive)' : 'var(--burgundy)';
+        el.style.color        = success ? 'var(--light-olive)' : 'var(--text-gold)';
+    }
+
+    function hidePicStatus() {
+        document.getElementById('picUploadStatus').style.display = 'none';
+    }
+    </script>
+
 </body>
 </html>
