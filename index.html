@@ -257,7 +257,7 @@
             background: var(--light-olive);
             color: var(--bg-dark);
             border: none;
-            width: 100%; /* كبرنا الزرار شوية لأن مفيش Cancel هنا */
+            width: 100%; 
             max-width: 150px;
         }
 
@@ -517,6 +517,335 @@
             .interactive-heart { font-size: 1.6rem; }
             .reason-display-card { font-size: 1.15rem; padding: 25px 20px; }
         }
+
+        /* ============ CASSETTE TAPE STYLES ============ */
+        .cassette-scene {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .cassette-label-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--text-gold);
+            margin-bottom: 0;
+            text-shadow: 0 0 20px rgba(226,201,138,0.4);
+        }
+
+        .cassette-label-sub {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--light-olive);
+            letter-spacing: 2px;
+            margin-top: -8px;
+        }
+
+        /* The cassette body */
+        .cassette {
+            width: 340px;
+            background: linear-gradient(160deg, #1e0e13 0%, #2d0f18 40%, #1a0b0f 100%);
+            border-radius: 18px;
+            border: 2.5px solid #5c1324;
+            box-shadow:
+                0 0 0 1px rgba(226,201,138,0.12),
+                0 20px 50px rgba(0,0,0,0.7),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+            padding: 22px 24px 18px;
+            position: relative;
+            transition: box-shadow 0.4s;
+        }
+
+        .cassette.playing {
+            box-shadow:
+                0 0 0 1px rgba(226,201,138,0.25),
+                0 20px 50px rgba(92,19,36,0.5),
+                0 0 35px rgba(226,201,138,0.12),
+                inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+
+        /* Screw corners */
+        .cassette::before, .cassette::after {
+            content: '✦';
+            position: absolute;
+            font-size: 0.6rem;
+            color: rgba(226,201,138,0.35);
+        }
+        .cassette::before { top: 10px; left: 12px; }
+        .cassette::after  { top: 10px; right: 12px; }
+
+        /* Top strip label */
+        .cassette-top-label {
+            background: linear-gradient(135deg, #3d1520, #5c1324);
+            border-radius: 8px;
+            padding: 10px 14px 8px;
+            text-align: center;
+            border: 1px solid rgba(226,201,138,0.25);
+            margin-bottom: 14px;
+        }
+        .cassette-top-label .song-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: var(--text-gold);
+            display: block;
+            line-height: 1.2;
+        }
+        .cassette-top-label .song-artist {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            color: var(--light-olive);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* Window area with reels */
+        .cassette-window {
+            background: #0d0508;
+            border-radius: 12px;
+            border: 1.5px solid rgba(226,201,138,0.2);
+            padding: 14px 10px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            position: relative;
+            box-shadow: inset 0 3px 12px rgba(0,0,0,0.8);
+        }
+
+        /* Tape guide holes on sides */
+        .cassette-window::before,
+        .cassette-window::after {
+            content: '';
+            position: absolute;
+            width: 10px; height: 10px;
+            background: #1e0e13;
+            border: 1px solid rgba(226,201,138,0.15);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .cassette-window::before { left: 8px; }
+        .cassette-window::after  { right: 8px; }
+
+        /* Reel wrapper */
+        .reel-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            width: 100%;
+        }
+
+        /* Tape bridge connecting reels */
+        .tape-bridge {
+            width: 60px;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, #3a1a22 20%, #4a2030 50%, #3a1a22 80%, transparent);
+            border-top: 1px solid rgba(226,201,138,0.1);
+            position: relative;
+            top: 0;
+            flex-shrink: 0;
+        }
+
+        /* Individual reel */
+        .reel {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #2a0e16, #160508);
+            border: 2px solid #5c1324;
+            box-shadow:
+                0 0 0 1px rgba(226,201,138,0.12),
+                inset 0 0 15px rgba(0,0,0,0.6);
+            position: relative;
+            transition: box-shadow 0.3s;
+        }
+
+        .reel.spinning {
+            animation: spinReel 1.4s linear infinite;
+        }
+
+        @keyframes spinReel {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* Hub */
+        .reel-hub {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reel-hub-inner {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #3d1520, #1e0e13);
+            border: 1.5px solid rgba(226,201,138,0.3);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.7);
+            position: relative;
+        }
+
+        /* Spokes */
+        .reel-hub-inner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(0deg, transparent 44%, rgba(226,201,138,0.25) 44%, rgba(226,201,138,0.25) 56%, transparent 56%),
+                linear-gradient(60deg, transparent 44%, rgba(226,201,138,0.25) 44%, rgba(226,201,138,0.25) 56%, transparent 56%),
+                linear-gradient(120deg, transparent 44%, rgba(226,201,138,0.25) 44%, rgba(226,201,138,0.25) 56%, transparent 56%);
+            border-radius: 50%;
+        }
+
+        /* Reel tape ring */
+        .reel::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            border: 6px solid transparent;
+            border-top-color: rgba(226,201,138,0.07);
+            border-right-color: rgba(226,201,138,0.04);
+        }
+
+        /* Bottom notches */
+        .cassette-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding: 0 4px;
+        }
+        .cassette-notch {
+            width: 38px; height: 8px;
+            background: #0d0508;
+            border-radius: 3px;
+            border: 1px solid rgba(226,201,138,0.12);
+        }
+        .cassette-side-screws {
+            display: flex;
+            gap: 8px;
+        }
+        .cassette-screw {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #3d1520, #0d0508);
+            border: 1px solid rgba(226,201,138,0.2);
+        }
+
+        /* Progress bar */
+        .cassette-progress-wrap {
+            width: 340px;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--burgundy), var(--text-gold));
+            border-radius: 4px;
+            transition: width 0.3s linear;
+        }
+        .progress-times {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: rgba(253,251,247,0.4);
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 6px;
+        }
+
+        /* Control buttons */
+        .cassette-controls {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ctrl-btn {
+            background: rgba(92,19,36,0.25);
+            border: 1.5px solid rgba(226,201,138,0.25);
+            color: var(--text-light);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+        .ctrl-btn:hover {
+            background: var(--burgundy);
+            border-color: var(--text-gold);
+            color: var(--text-gold);
+            transform: translateY(-2px) scale(1.08);
+            box-shadow: 0 8px 20px rgba(92,19,36,0.5);
+        }
+        .ctrl-btn.play-pause-btn {
+            width: 64px;
+            height: 64px;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, var(--burgundy), #44101d);
+            border-color: var(--text-gold);
+            box-shadow: 0 8px 25px rgba(92,19,36,0.4);
+        }
+        .ctrl-btn.play-pause-btn:hover {
+            background: linear-gradient(135deg, #7c1c32, var(--burgundy));
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 12px 30px rgba(92,19,36,0.6);
+        }
+
+        /* Equalizer bars (shown when playing) */
+        .eq-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 22px;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .eq-bars.active { opacity: 1; }
+        .eq-bar {
+            width: 4px;
+            background: linear-gradient(to top, var(--burgundy), var(--text-gold));
+            border-radius: 2px;
+            animation: none;
+        }
+        .eq-bars.active .eq-bar:nth-child(1) { animation: eqBounce 0.6s 0.0s infinite alternate ease-in-out; }
+        .eq-bars.active .eq-bar:nth-child(2) { animation: eqBounce 0.6s 0.1s infinite alternate ease-in-out; }
+        .eq-bars.active .eq-bar:nth-child(3) { animation: eqBounce 0.6s 0.2s infinite alternate ease-in-out; }
+        .eq-bars.active .eq-bar:nth-child(4) { animation: eqBounce 0.6s 0.15s infinite alternate ease-in-out; }
+        .eq-bars.active .eq-bar:nth-child(5) { animation: eqBounce 0.6s 0.05s infinite alternate ease-in-out; }
+
+        @keyframes eqBounce {
+            from { height: 4px; }
+            to   { height: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .cassette, .cassette-progress-wrap { width: 290px; }
+            .reel { width: 60px; height: 60px; }
+            .tape-bridge { width: 42px; }
+        }
     </style>
 </head>
 <body>
@@ -525,7 +854,6 @@
         <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="orb orb-4"></div>
     </div>
 
-    <!-- CUSTOM GREEN PASSWORD MODAL -->
     <div id="passwordModal" class="modal-overlay">
         <div class="modal-box">
             <p class="modal-question">who is the pretiest girl in the world</p>
@@ -537,13 +865,11 @@
         </div>
     </div>
 
-    <!-- SCREEN 1: SPLASH LANDING -->
     <div id="screen1" class="screen active" onclick="triggerPasswordModal()">
         <h1 class="main-title">made only for the <span>most beautiful girl in the world</span></h1>
         <p class="tap-continue">tap to continue</p>
     </div>
 
-    <!-- SCREEN 2: MAIN MENU -->
     <div id="screen2" class="screen">
         <h1 class="header-title">Welcome to our home</h1>
         <div class="menu-container">
@@ -551,10 +877,11 @@
             <button class="menu-btn" onclick="openSubScreen('sub2')">Our years together</button>
             <button class="menu-btn" onclick="openSubScreen('sub3')">A Special Promise</button>
             <button class="menu-btn" onclick="openSubScreen('sub6')">Reasons I Love You</button>
+            <button class="menu-btn" onclick="openSubScreen('sub8')">🎵 Your Favorite Song</button>
         </div>
         
-        <!-- Bottom Row Buttons -->
         <button class="corner-btn corner-btn-left" onclick="openSubScreen('sub4')">Your Fav Moments</button>
+        <button class="corner-btn corner-btn-center" onclick="openSubScreen('sub7')">The Ultimate Fact</button>
         <button class="corner-btn corner-btn-right" onclick="openSubScreen('sub5')">Our Time Together</button>
     </div>
 
@@ -621,22 +948,117 @@
         </div>
     </div>
 
-    <!-- REASONS SECTION -->
     <div id="sub6" class="screen sub-screen">
         <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
         <h1 class="header-title" style="font-size: 3.5rem; margin-bottom: 20px;">Reasons I Love You</h1>
         
-        <!-- INITIAL BUTTON -->
         <button class="menu-btn" id="askReasonBtn" onclick="revealHeartsContainer()">I want a reason</button>
         
-        <!-- ROW OF 20 HEARTS -->
         <div class="hearts-grid-row" id="heartsRow"></div>
         
-        <!-- DISPLAY CARD -->
         <div class="reason-display-card" id="reasonDisplayCard">
             <span class="card-icon" id="cardIcon">✨</span>
             <p id="reasonTextSpace"></p>
         </div>
+    </div>
+
+    <div id="sub7" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+        <div class="love-card" style="text-align: center; max-width: 600px; padding: 40px; width: 100%;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--text-gold); margin-bottom: 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Who loves who more?</h2>
+            
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--light-olive); margin-bottom: 10px; letter-spacing: 1px; opacity: 0.85;">
+                — the one my heart always aches for —
+            </p>
+            <div style="position: relative; height: 250px; width: 100%;" id="ultimateFactContainer">
+                <button class="menu-btn" style="padding: 15px 40px; position: absolute; left: 15%; top: 40%; transform: translateY(-50%);" onclick="ultimateFactWin()">youssef</button>
+                <button class="menu-btn" style="padding: 15px 40px; position: absolute; right: 15%; top: 40%; transform: translateY(-50%); transition: all 0.2s ease;" id="runawayBtn" onmouseover="runaway(this)" ontouchstart="runaway(this)">Haniin 🤍</button>
+            </div>
+
+            <p id="ultimateFactResult" style="margin-top: 30px; font-size: 1.5rem; color: var(--light-olive); font-family: 'Playfair Display', serif; display: none;"></p>
+        </div>
+    </div>
+
+    <!-- SUB SCREEN 8: YOUR FAVORITE SONG -->
+    <div id="sub8" class="screen sub-screen">
+        <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
+        
+        <div class="cassette-scene">
+            <div>
+                <p class="cassette-label-title">Your Favorite Song 🎵</p>
+                <p class="cassette-label-sub">just for you, always</p>
+            </div>
+
+            <!-- CASSETTE BODY -->
+            <div class="cassette" id="cassetteBody">
+                <!-- Top label -->
+                <div class="cassette-top-label">
+                    <span class="song-name">خليك معايا</span>
+                    <span class="song-artist">your song ♾️</span>
+                </div>
+
+                <!-- Window with reels -->
+                <div class="cassette-window">
+                    <div class="reel-wrapper">
+                        <div class="reel" id="reelLeft">
+                            <div class="reel-hub"><div class="reel-hub-inner"></div></div>
+                        </div>
+                        <div class="tape-bridge"></div>
+                        <div class="reel" id="reelRight">
+                            <div class="reel-hub"><div class="reel-hub-inner"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom notches -->
+                <div class="cassette-bottom">
+                    <div class="cassette-notch"></div>
+                    <div class="cassette-side-screws">
+                        <div class="cassette-screw"></div>
+                        <div class="cassette-screw"></div>
+                        <div class="cassette-screw"></div>
+                    </div>
+                    <div class="cassette-notch"></div>
+                </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="cassette-progress-wrap">
+                <div class="progress-bar-bg" id="progressBarBg">
+                    <div class="progress-bar-fill" id="progressBarFill"></div>
+                </div>
+                <div class="progress-times">
+                    <span id="timeElapsed">0:00</span>
+                    <span id="timeDuration">0:00</span>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="cassette-controls">
+                <!-- Equalizer indicator -->
+                <div class="eq-bars" id="eqBars">
+                    <div class="eq-bar" style="height:6px"></div>
+                    <div class="eq-bar" style="height:14px"></div>
+                    <div class="eq-bar" style="height:9px"></div>
+                    <div class="eq-bar" style="height:18px"></div>
+                    <div class="eq-bar" style="height:7px"></div>
+                </div>
+
+                <!-- Rewind -->
+                <button class="ctrl-btn" onclick="seekSong(-10)" title="Rewind 10s">⏮</button>
+
+                <!-- Play / Pause -->
+                <button class="ctrl-btn play-pause-btn" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
+
+                <!-- Forward -->
+                <button class="ctrl-btn" onclick="seekSong(10)" title="Forward 10s">⏭</button>
+            </div>
+        </div>
+
+        <!-- Hidden audio element -->
+        <audio id="songAudio" preload="auto">
+            <source src="khaleek_maaya_mp3.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
     <script>
@@ -710,6 +1132,18 @@
                 document.getElementById('askReasonBtn').style.display = 'inline-block';
                 document.getElementById('heartsRow').style.display = 'none';
                 document.getElementById('reasonDisplayCard').style.display = 'none';
+            }
+            if(screenId !== 'sub7') {
+                const resultText = document.getElementById('ultimateFactResult');
+                const runawayBtn = document.getElementById('runawayBtn');
+                if(resultText) resultText.style.display = 'none';
+                if(runawayBtn) {
+                    runawayBtn.style.display = 'inline-block';
+                    runawayBtn.style.left = 'auto';
+                    runawayBtn.style.right = '15%';
+                    runawayBtn.style.top = '40%';
+                    runawayBtn.style.transform = 'translateY(-50%)';
+                }
             }
         }
 
@@ -875,6 +1309,109 @@
             displayCard.offsetHeight; 
             displayCard.style.animation = 'fadeInDown 0.6s ease';
         }
+
+        /* ULTIMATE FACT GAME LOGIC */
+        function runaway(btn) {
+            const container = document.getElementById('ultimateFactContainer');
+            // التأكد من حدود الحركة حتى لا يخرج الزرار برا الشاشة
+            const maxX = container.clientWidth - btn.clientWidth;
+            const maxY = container.clientHeight - btn.clientHeight;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            btn.style.right = 'auto'; 
+            btn.style.transform = 'none'; 
+        }
+
+        function ultimateFactWin() {
+            const result = document.getElementById('ultimateFactResult');
+            result.innerText = "good girlI love you more ❤️";
+            result.style.display = 'block';
+            result.style.animation = 'fadeInDown 0.6s ease';
+            document.getElementById('runawayBtn').style.display = 'none'; 
+        }
+
+        /* ===== CASSETTE TAPE PLAYER LOGIC ===== */
+        const songAudio    = document.getElementById('songAudio');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressFill = document.getElementById('progressBarFill');
+        const progressBg   = document.getElementById('progressBarBg');
+        const timeElapsed  = document.getElementById('timeElapsed');
+        const timeDuration = document.getElementById('timeDuration');
+        const reelLeft     = document.getElementById('reelLeft');
+        const reelRight    = document.getElementById('reelRight');
+        const cassetteBody = document.getElementById('cassetteBody');
+        const eqBars       = document.getElementById('eqBars');
+
+        function formatTime(s) {
+            if (isNaN(s) || s < 0) return '0:00';
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return m + ':' + (sec < 10 ? '0' : '') + sec;
+        }
+
+        function setPlaying(isPlaying) {
+            if (isPlaying) {
+                playPauseBtn.textContent = '⏸';
+                reelLeft.classList.add('spinning');
+                reelRight.classList.add('spinning');
+                cassetteBody.classList.add('playing');
+                eqBars.classList.add('active');
+            } else {
+                playPauseBtn.textContent = '▶';
+                reelLeft.classList.remove('spinning');
+                reelRight.classList.remove('spinning');
+                cassetteBody.classList.remove('playing');
+                eqBars.classList.remove('active');
+            }
+        }
+
+        function togglePlayPause() {
+            if (songAudio.paused) {
+                songAudio.play().then(() => setPlaying(true)).catch(e => console.warn('Audio play error:', e));
+            } else {
+                songAudio.pause();
+                setPlaying(false);
+            }
+        }
+
+        function seekSong(delta) {
+            if (!isNaN(songAudio.duration)) {
+                songAudio.currentTime = Math.max(0, Math.min(songAudio.duration, songAudio.currentTime + delta));
+            }
+        }
+
+        songAudio.addEventListener('timeupdate', () => {
+            if (!isNaN(songAudio.duration) && songAudio.duration > 0) {
+                const pct = (songAudio.currentTime / songAudio.duration) * 100;
+                progressFill.style.width = pct + '%';
+                timeElapsed.textContent = formatTime(songAudio.currentTime);
+                timeDuration.textContent = formatTime(songAudio.duration);
+            }
+        });
+
+        songAudio.addEventListener('ended', () => setPlaying(false));
+
+        progressBg.addEventListener('click', function(e) {
+            if (!isNaN(songAudio.duration)) {
+                const rect = this.getBoundingClientRect();
+                const ratio = (e.clientX - rect.left) / rect.width;
+                songAudio.currentTime = ratio * songAudio.duration;
+            }
+        });
+
+        // Pause song when leaving the screen
+        const origNavigateTo = navigateTo;
+        navigateTo = function(screenId) {
+            if (screenId !== 'sub8' && !songAudio.paused) {
+                songAudio.pause();
+                setPlaying(false);
+            }
+            origNavigateTo(screenId);
+        };
     </script>
 </body>
 </html>
