@@ -1565,7 +1565,6 @@
         </div>
     </div>
 
-    <!-- SUB SCREEN 8: YOUR FAVORITE SONG -->
     <div id="sub8" class="screen sub-screen">
         <button class="back-btn" onclick="navigateTo('screen2')">← Back</button>
         
@@ -1575,15 +1574,12 @@
                 <p class="cassette-label-sub">just for you, always</p>
             </div>
 
-            <!-- CASSETTE BODY -->
             <div class="cassette" id="cassetteBody">
-                <!-- Top label -->
                 <div class="cassette-top-label">
                     <span class="song-name">خليك معايا</span>
                     <span class="song-artist">your song </span>
                 </div>
 
-                <!-- Window with reels -->
                 <div class="cassette-window">
                     <div class="reel-wrapper">
                         <div class="reel" id="reelLeft">
@@ -1596,7 +1592,6 @@
                     </div>
                 </div>
 
-                <!-- Bottom notches -->
                 <div class="cassette-bottom">
                     <div class="cassette-notch"></div>
                     <div class="cassette-side-screws">
@@ -1608,7 +1603,6 @@
                 </div>
             </div>
 
-            <!-- Progress bar -->
             <div class="cassette-progress-wrap">
                 <div class="progress-bar-bg" id="progressBarBg">
                     <div class="progress-bar-fill" id="progressBarFill"></div>
@@ -1619,9 +1613,7 @@
                 </div>
             </div>
 
-            <!-- Controls -->
             <div class="cassette-controls">
-                <!-- Equalizer indicator -->
                 <div class="eq-bars" id="eqBars">
                     <div class="eq-bar" style="height:6px"></div>
                     <div class="eq-bar" style="height:14px"></div>
@@ -1630,18 +1622,14 @@
                     <div class="eq-bar" style="height:7px"></div>
                 </div>
 
-                <!-- Rewind -->
                 <button class="ctrl-btn" onclick="seekSong(-10)" title="Rewind 10s">⏮</button>
 
-                <!-- Play / Pause -->
                 <button class="ctrl-btn play-pause-btn" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
 
-                <!-- Forward -->
                 <button class="ctrl-btn" onclick="seekSong(10)" title="Forward 10s">⏭</button>
             </div>
         </div>
 
-        <!-- Hidden audio element -->
         <audio id="songAudio" preload="auto">
             <source src="khaleek_maaya_mp3.mp3" type="audio/mpeg">
         </audio>
@@ -2003,10 +1991,8 @@
             origNavigateTo(screenId);
         };
     </script>
-    <!-- SUB SCREEN: OUR PICTURES -->
     <div id="subPictures" class="screen sub-screen" style="justify-content:flex-start; padding-top:0; overflow:hidden;">
 
-        <!-- Fixed top bar -->
         <div class="pics-topbar">
             <button class="back-btn" style="position:relative;top:auto;left:auto;margin:0;flex-shrink:0;" onclick="navigateTo('screen2')">← Back</button>
             <div style="text-align:center; flex:1; min-width:0;">
@@ -2017,10 +2003,8 @@
             <input type="file" id="picFileInput" accept="image/*" multiple style="display:none;" onchange="handlePicUpload(event)">
         </div>
 
-        <!-- Status toast -->
         <div id="picUploadStatus" class="pics-toast"></div>
 
-        <!-- Upload progress bar -->
         <div id="picsProgressWrap" class="pics-progress-wrap">
             <div class="pics-progress-track">
                 <div id="picsProgressBar" class="pics-progress-fill"></div>
@@ -2028,16 +2012,13 @@
             <p id="picsProgressLabel" class="pics-progress-label"></p>
         </div>
 
-        <!-- Scrollable gallery -->
         <div id="picturesGallery" class="pics-gallery"></div>
 
-        <!-- Empty state -->
         <div id="picsEmptyState" class="pics-empty">
             <div style="font-size:2.8rem;">🌸</div>
             No pictures yet...<br>tap ＋ to add the first one
         </div>
 
-        <!-- Lightbox -->
         <div id="picsLightbox" class="pics-lightbox" onclick="closeLightbox()">
             <div class="pics-lightbox-img-wrap" onclick="event.stopPropagation()">
                 <button class="pics-nav-btn prev" id="picsNavPrev" onclick="lbNavigate(-1)">‹</button>
@@ -2351,37 +2332,27 @@
     }
     </script>
 
-    <!-- ═══════════════════════════════════════════
-         SUB SCREEN: WISHES
-    ═══════════════════════════════════════════ -->
     <div id="subWishes" class="screen sub-screen">
 
-        <!-- Top bar -->
         <div class="wishes-topbar">
             <button class="back-btn" style="position:relative;top:auto;left:auto;margin:0;flex-shrink:0;" onclick="navigateTo('screen2')">← Back</button>
             <div style="text-align:center;flex:1;min-width:0;">
                 <h1 style="font-family:'Dancing Script',cursive;font-size:clamp(1.4rem,4vw,2.4rem);color:var(--text-gold);margin:0;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Add Your Wishes</h1>
                 <p style="font-family:'Playfair Display',serif;font-style:italic;color:rgba(226,201,138,0.5);font-size:clamp(0.65rem,1.6vw,0.82rem);margin:0;letter-spacing:1px;">wishes sent to Youssef 🌙</p>
             </div>
-            <div style="width:clamp(38px,6vw,46px);flex-shrink:0;"></div><!-- spacer to centre the title -->
-        </div>
+            <div style="width:clamp(38px,6vw,46px);flex-shrink:0;"></div></div>
 
-        <!-- Status toast -->
         <div id="wishesStatus" class="wishes-toast"></div>
 
-        <!-- Scrollable body: grid + add button -->
         <div class="wishes-body">
 
-            <!-- Grid of wish notes -->
             <div id="wishesGrid" class="wishes-grid"></div>
 
-            <!-- Empty state -->
             <div id="wishesEmpty" class="wishes-empty">
                 <div style="font-size:2.6rem;">✨</div>
                 No wishes yet...<br>be the first to send one
             </div>
 
-            <!-- Add button -->
             <button class="wishes-add-btn" onclick="openWishModal()">
                 ✨ I want to order a wish
             </button>
@@ -2389,7 +2360,6 @@
         </div>
     </div>
 
-    <!-- Write-a-wish modal -->
     <div id="wishModalOverlay" class="wish-modal-overlay" onclick="closeWishModal()">
         <div class="wish-modal-paper" onclick="event.stopPropagation()">
             <p class="wish-modal-title">Make a Wish 🌙</p>
@@ -2405,7 +2375,6 @@
         </div>
     </div>
 
-    <!-- View-a-wish overlay -->
     <div id="wishViewOverlay" class="wish-view-overlay" onclick="closeWishView()">
         <div id="wishViewPaper" class="wish-view-paper" onclick="event.stopPropagation()">
             <p class="wish-view-name" id="wishViewName"></p>
@@ -2418,7 +2387,6 @@
         </div>
     </div>
 
-    <!-- Green delete confirmation modal -->
     <div id="wishConfirmOverlay" class="wish-confirm-overlay" onclick="cancelDeleteWish()">
         <div class="wish-confirm-box" onclick="event.stopPropagation()">
             <span class="wish-confirm-icon">🗑️</span>
@@ -2443,23 +2411,19 @@
     let wishesLoaded  = false;
     let viewingWishId = null;
 
-    /* ── Load ── */
+    /* ── Load from LocalStorage ── */
     function loadWishes() {
         if (wishesLoaded) { renderWishes(); return; }
-        showWishToast('Loading wishes… 🌙', 'neutral');
-
-        fetch(W_URL + '/latest', { headers: { 'X-Master-Key': W_API_KEY } })
-        .then(r => r.json())
-        .then(data => {
-            allWishes    = Array.isArray(data.record?.wishes) ? data.record.wishes : [];
-            wishesLoaded = true;
-            hideWishToast();
-            renderWishes();
-        })
-        .catch(() => {
-            hideWishToast();
-            showWishToast('⚠️ Could not load wishes. Check connection.', 'error');
-        });
+        
+        try {
+            const localData = localStorage.getItem('sweet_wishes');
+            allWishes = localData ? JSON.parse(localData) : [];
+        } catch(e) {
+            allWishes = [];
+        }
+        
+        wishesLoaded = true;
+        renderWishes();
     }
 
     /* ── Render grid ── */
@@ -2520,7 +2484,6 @@
         };
 
         closeWishModal();
-        showWishToast('Sending your wish… 🌙', 'neutral');
 
         const updated = [...allWishes, newWish];
         saveWishes(updated,
@@ -2556,7 +2519,7 @@
             `;
             document.body.appendChild(banner);
         }
-        banner.textContent = '✨ Your wish has been sent to Youssef ✨';
+        banner.textContent = '✨ Your wish has been sent ✨';
         banner.style.opacity = '1';
         banner.style.transform = 'translateX(-50%) translateY(0)';
         setTimeout(() => {
@@ -2618,7 +2581,6 @@
         if (!viewingWishId) return;
         const remaining = allWishes.filter(w => w.id !== viewingWishId);
         closeWishView();
-        showWishToast('Deleting… ⏳', 'neutral');
         saveWishes(remaining,
             () => {
                 allWishes = remaining;
@@ -2630,22 +2592,14 @@
         );
     }
 
-    /* ── Save to JSONBin (merges with existing photos key) ── */
+    /* ── Save to LocalStorage ── */
     function saveWishes(wishes, onOk, onFail) {
-        // Read current record first so we don't overwrite photos
-        fetch(W_URL + '/latest', { headers: { 'X-Master-Key': W_API_KEY } })
-        .then(r => r.json())
-        .then(data => {
-            const record = data.record || {};
-            return fetch(W_URL, {
-                method:  'PUT',
-                headers: { 'Content-Type':'application/json', 'X-Master-Key': W_API_KEY },
-                body:    JSON.stringify({ ...record, wishes })
-            });
-        })
-        .then(r => r.json())
-        .then(data => (data.record ? onOk() : onFail()))
-        .catch(onFail);
+        try {
+            localStorage.setItem('sweet_wishes', JSON.stringify(wishes));
+            onOk();
+        } catch(e) {
+            onFail();
+        }
     }
 
     /* ── Helpers ── */
